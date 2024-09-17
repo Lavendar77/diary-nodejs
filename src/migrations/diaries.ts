@@ -19,6 +19,6 @@ export class Diaries extends Migration {
     public down(): Promise<void> {
         this.sql = `DROP TABLE IF EXISTS diaries`;
 
-        return this._run();
+        return this._run('dropped');
     }
 };

@@ -18,6 +18,6 @@ export class Users extends Migration {
     public down(): Promise<void> {
         this.sql = `DROP TABLE IF EXISTS users`;
 
-        return this._run();
+        return this._run('dropped');
     }
 };
