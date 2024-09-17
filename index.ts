@@ -7,7 +7,7 @@ import errorRouter from './src/routes/error';
 dotenv.config();
 
 const app: Express = express();
-const port: string | undefined = process.env.APP_PORT;
+const port: string | number = process.env.APP_PORT || 8080;
 const app_url: string = process.env.APP_URL || 'http://localhost';
 
 app.use(express.json());

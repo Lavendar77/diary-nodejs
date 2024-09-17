@@ -6,6 +6,7 @@ export class Users extends Migration {
             id bigint unsigned NOT NULL AUTO_INCREMENT,
             name varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
             email varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+            password varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
             created_at timestamp NULL,
             updated_at timestamp NULL,
             PRIMARY KEY (id),
