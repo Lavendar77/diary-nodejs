@@ -21,4 +21,22 @@ export class UserRepository extends EntityManager {
             this.db_timestamp
         ]);
     }
+
+    /**
+     * Get the specified resource by ID.
+     *
+     * @param {number|string} number
+     * @returns {User}
+     */
+    public async findById(userID: number|string): Promise<User> {
+        let sql = 'SELECT * FROM users WHERE id = ? LIMIT 1';
+
+        try {
+            let result = await DatabaseConnect.run(sql, [userID]);
+
+            return User.fromObject((result as any)[0]);
+        } catch(err) {
+            throw err;
+        }
+    }
 }

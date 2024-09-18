@@ -19,15 +19,31 @@ export class Model {
     }
 
     /**
+     * Creates an instance of the model from a plain object.
+     *
+     * @param data - An object containing model properties.
+     * @returns {T} An instance of the model.
+     */
+    public static fromObject<T extends Model>(this: new (...args: any[]) => T, data: Partial<T>): T {
+        const instance = new this();
+
+        Object.assign(instance, data);
+
+        return instance;
+    }
+
+    /**
      * Convert model to JSON for representation.
      *
      * @returns {object}
      */
     public toJSON(): object {
         let object: { [key: string]: any } = {};
+        let hiddenAttrs = this.hidden;
+        hiddenAttrs.push('hidden');
 
         Object.keys(this).forEach(key => {
-            if (!this.hidden.includes(key)) {
+            if (!hiddenAttrs.includes(key)) {
                 object[key] = (this as any)[key];
             }
         });

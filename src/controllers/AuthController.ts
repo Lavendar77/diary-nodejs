@@ -56,3 +56,20 @@ export const register = (request: Request, response: Response) => {
         throw err;
     }
 };
+
+
+
+
+/**
+ * Authenticate a user.
+ *
+ * @param {Request} request
+ * @param {Response} response
+ * @return {Response}
+ */
+export const login = (request: Request, response: Response) => {
+    return response
+        .json(new ApiResponder(true, 'User fetched successfully', {
+            // user: user.toJSON(),
+        }));
+};
