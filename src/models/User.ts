@@ -1,4 +1,4 @@
-import { Model } from "./_model";
+import Model from "./_model";
 
 export default class User extends Model {
     private id: number|undefined;

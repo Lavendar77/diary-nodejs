@@ -1,5 +1,5 @@
 import DatabaseConnect from "../actions/DatabaseConnect";
-import User from "../entities/User";
+import User from "../models/User";
 import { hash } from "../modules/bcrypt";
 import { EntityManager } from "./_manager";
 

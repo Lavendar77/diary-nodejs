@@ -1,5 +1,5 @@
 import UserDto from "../dtos/UserDto";
-import User from "../entities/User";
+import User from "../models/User";
 import { UserRepository } from "../repositories/UserRepository";
 import jwt, { Secret } from 'jsonwebtoken';
 
