@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../entities/User';
+import User from '../entities/User';
 import { ZodError } from 'zod';
 import { ApiResponder } from '../actions/ApiResponder';
 import { UserRepository } from '../repositories/UserRepository';

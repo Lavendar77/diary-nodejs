@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { Model } from "./_model";
 
-export class User extends Model {
+export default class User extends Model {
     private id: number|undefined;
     public name: string = '';
     public email: string = '';
