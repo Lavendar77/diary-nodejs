@@ -3,6 +3,7 @@ import { User } from '../entities/User';
 import { ZodError } from 'zod';
 import { ApiResponder } from '../actions/ApiResponder';
 import { UserRepository } from '../repositories/UserRepository';
+import jwt, { Secret } from 'jsonwebtoken';
 
 
 
@@ -27,10 +28,19 @@ export const register = (request: Request, response: Response) => {
         // store the user
         new UserRepository(user)
             .store()
-            .then(() => {
+            .then((data: any) => {
+                let userId = data.insertId;
+
+                const token = jwt.sign({ id: userId.toString(), email: user.email }, process.env.JWT_KEY as Secret, {
+                    expiresIn: '2 days',
+                });
+
                 return response
                     .status(201)
-                    .json(new ApiResponder(true, 'User registered successfully', user.toJSON()))
+                    .json(new ApiResponder(true, 'User registered successfully', {
+                        user: user.toJSON(),
+                        token: token,
+                    }))
             })
             .catch((err) => {
                 return response
