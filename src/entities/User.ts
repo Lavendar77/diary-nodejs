@@ -21,8 +21,20 @@ export class User extends Model {
         return z.object({
             name: z.string().min(5).max(255),
             email: z.string().email().min(5).max(255),
-            password: z.string().min(8),
-            password_confirmation: z.string().min(8),
+            password: z.string().min(8).max(20)
+                .refine((password) => /[A-Z]/.test(password), {
+                    message: "Password must contain an uppercase letter",
+                })
+                .refine((password) => /[a-z]/.test(password), {
+                    message: "Password must contact a lowercase letter",
+                })
+                .refine((password) => /[0-9]/.test(password), {
+                    message: "Password must contain a digit",
+                })
+                .refine((password) => /[!@#$%^&*]/.test(password), {
+                    message: "Password must contain a special character",
+                }),
+            password_confirmation: z.string().min(8).max(20),
         })
             .required()
             .refine((data) => data.password === data.password_confirmation, {
