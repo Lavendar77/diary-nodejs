@@ -2,15 +2,35 @@ import { z } from "zod";
 import { Model } from "./_model";
 
 export class User extends Model {
-    protected hidden: string[] = ["password", "password_confirmation", "hidden"];
+    private id: number|undefined;
+    public name: string = '';
+    public email: string = '';
+    private password: string = '';
+    private password_confirmation: string = '';
 
-    public constructor(
-        public name: string,
-        public email: string,
-        private password: string,
-        private password_confirmation: string
-    ) {
-        super();
+    protected hidden: string[] = [
+        "password",
+        "password_confirmation",
+        "hidden",
+    ];
+
+    public new(name: string, email: string, password: string, password_confirmation: string): this {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.password_confirmation = password_confirmation;
+
+        return this;
+    }
+
+    public setId(id: number): this {
+        this.id = id;
+
+        return this;
+    }
+
+    public getId(): number|undefined {
+        return this.id;
     }
 
     public getPassword(): string {

@@ -4,17 +4,19 @@ import { hash } from "../modules/bcrypt";
 import { EntityManager } from "./_manager";
 
 export class UserRepository extends EntityManager {
-    constructor(public user: User) {
-        super();
-    }
-
-    public store(): Promise<unknown> {
+    /**
+     * Store a new resource.
+     *
+     * @param {User} user
+     * @returns {Promise<unknown>}
+     */
+    public store(user: User): Promise<unknown> {
         let sql = 'INSERT INTO users(name, email, password, created_at, updated_at) VALUES(?, ?, ?, ?, ?)';
 
         return DatabaseConnect.run(sql, [
-            this.user.name,
-            this.user.email.toLowerCase(),
-            hash(this.user.getPassword()),
+            user.name,
+            user.email.toLowerCase(),
+            hash(user.getPassword()),
             this.db_timestamp,
             this.db_timestamp
         ]);

@@ -17,7 +17,7 @@ import jwt, { Secret } from 'jsonwebtoken';
  */
 export const register = (request: Request, response: Response) => {
     try {
-        const user = new User(
+        const user = new User().new(
             request.body.name,
             request.body.email,
             request.body.password,
@@ -26,19 +26,19 @@ export const register = (request: Request, response: Response) => {
         user.validate();
 
         // store the user
-        new UserRepository(user)
-            .store()
+        new UserRepository()
+            .store(user)
             .then((data: any) => {
-                let userId = data.insertId;
+                user.setId(data.insertId);
 
-                const token = jwt.sign({ id: userId.toString(), email: user.email }, process.env.JWT_KEY as Secret, {
-                    expiresIn: '2 days',
+                const token = jwt.sign(user.only(['id', 'name', 'email']), process.env.JWT_KEY as Secret, {
+                    expiresIn: '1 day',
                 });
 
                 return response
                     .status(201)
                     .json(new ApiResponder(true, 'User registered successfully', {
-                        user: user.toJSON(),
+                        user: user.only(['id', 'name', 'email']),
                         token: token,
                     }))
             })
