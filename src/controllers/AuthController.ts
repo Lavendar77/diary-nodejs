@@ -20,10 +20,9 @@ export const register = (request: Request, response: Response) => {
         const user = new User().new(
             request.body.name,
             request.body.email,
-            request.body.password,
-            request.body.password_confirmation
+            request.body.password
         );
-        user.validate();
+        user.validate(request.body.password_confirmation);
 
         // store the user
         new UserRepository()

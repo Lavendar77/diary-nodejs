@@ -6,19 +6,15 @@ export default class User extends Model {
     public name: string = '';
     public email: string = '';
     private password: string = '';
-    private password_confirmation: string = '';
 
     protected hidden: string[] = [
         "password",
-        "password_confirmation",
-        "hidden",
     ];
 
-    public new(name: string, email: string, password: string, password_confirmation: string): this {
+    public new(name: string, email: string, password: string): this {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.password_confirmation = password_confirmation;
 
         return this;
     }
@@ -37,7 +33,7 @@ export default class User extends Model {
         return this.password;
     }
 
-    public validate() {
+    public validate(password_confirmation: string) {
         return z.object({
             name: z.string().min(5).max(255),
             email: z.string().email().min(5).max(255),
@@ -65,7 +61,7 @@ export default class User extends Model {
                 name: this.name,
                 email: this.email,
                 password: this.password,
-                password_confirmation: this.password_confirmation,
+                password_confirmation: password_confirmation,
             });
     }
 }
