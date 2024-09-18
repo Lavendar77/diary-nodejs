@@ -4,12 +4,8 @@ import { hash } from "../modules/bcrypt";
 import { EntityManager } from "./_manager";
 
 export class UserRepository extends EntityManager {
-    /**
-     * Store a new resource.
-     *
-     * @param {User} user
-     * @returns {Promise<unknown>}
-     */
+    protected table: string = 'users';
+
     public store(user: User): Promise<unknown> {
         let sql = 'INSERT INTO users(name, email, password, created_at, updated_at) VALUES(?, ?, ?, ?, ?)';
 
@@ -22,12 +18,6 @@ export class UserRepository extends EntityManager {
         ]);
     }
 
-    /**
-     * Get the specified resource by ID.
-     *
-     * @param {number|string} number
-     * @returns {User}
-     */
     public async findById(userID: number|string): Promise<User> {
         let sql = 'SELECT * FROM users WHERE id = ? LIMIT 1';
 
