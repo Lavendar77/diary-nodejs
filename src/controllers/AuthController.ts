@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { ZodError } from 'zod';
 import { ApiResponder } from '../actions/ApiResponder';
 import UserService from '../services/UserService';
-import UserDto from '../dtos/UserDto';
+import UserRegisterDto from '../dtos/User/UserRegisterDto';
 
 
 
@@ -16,13 +16,13 @@ import UserDto from '../dtos/UserDto';
  */
 export const register = async (request: Request, response: Response) => {
     try {
-        const userDto = new UserDto(
+        const userRegisterDto = new UserRegisterDto(
             request.body.name,
             request.body.email,
             request.body.password,
             request.body.password_confirmation
         );
-        const { user, token } = await new UserService().register(userDto);
+        const { user, token } = await new UserService().register(userRegisterDto);
 
         return response
             .status(201)

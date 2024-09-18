@@ -1,16 +1,16 @@
-import UserDto from "../dtos/UserDto";
+import UserRegisterDto from "../dtos/User/UserRegisterDto";
 import User from "../models/User";
 import { UserRepository } from "../repositories/UserRepository";
 import jwt, { Secret } from 'jsonwebtoken';
 
 export default class UserService {
-    public async register(userDto: UserDto): Promise<{user: User; token: string;}> {
-        userDto.validate();
+    public async register(userRegisterDto: UserRegisterDto): Promise<{user: User; token: string;}> {
+        userRegisterDto.validate();
 
         const user = new User().new(
-            userDto.name,
-            userDto.email,
-            userDto.password
+            userRegisterDto.name,
+            userRegisterDto.email,
+            userRegisterDto.password
         );
 
         const data: any = await new UserRepository().store(user);

@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export default class UserDto {
+export default class UserRegisterDto {
     constructor(
         public readonly name: string,
         public readonly email: string,
