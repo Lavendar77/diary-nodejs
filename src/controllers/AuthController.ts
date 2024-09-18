@@ -26,7 +26,7 @@ export const register = (request: Request, response: Response) => {
 
         // store the user
         new UserRepository(user)
-            .save()
+            .store()
             .then(() => {
                 return response
                     .status(201)

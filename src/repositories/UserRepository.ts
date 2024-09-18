@@ -8,7 +8,7 @@ export class UserRepository extends EntityManager {
         super();
     }
 
-    public save(): Promise<unknown> {
+    public store(): Promise<unknown> {
         let sql = 'INSERT INTO users(name, email, password, created_at, updated_at) VALUES(?, ?, ?, ?, ?)';
 
         return DatabaseConnect.run(sql, [
