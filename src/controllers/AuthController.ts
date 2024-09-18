@@ -1,9 +1,8 @@
 import { Request, Response } from 'express';
-import User from '../entities/User';
 import { ZodError } from 'zod';
 import { ApiResponder } from '../actions/ApiResponder';
-import { UserRepository } from '../repositories/UserRepository';
-import jwt, { Secret } from 'jsonwebtoken';
+import UserService from '../services/UserService';
+import UserDto from '../dtos/UserDto';
 
 
 
@@ -15,45 +14,32 @@ import jwt, { Secret } from 'jsonwebtoken';
  * @param {Response} response
  * @return {Response}
  */
-export const register = (request: Request, response: Response) => {
+export const register = async (request: Request, response: Response) => {
     try {
-        const user = new User().new(
+        const userDto = new UserDto(
             request.body.name,
             request.body.email,
-            request.body.password
+            request.body.password,
+            request.body.password_confirmation
         );
-        user.validate(request.body.password_confirmation);
+        const { user, token } = await new UserService().register(userDto);
 
-        // store the user
-        new UserRepository()
-            .store(user)
-            .then((data: any) => {
-                user.setId(data.insertId);
-
-                const token = jwt.sign(user.only(['id', 'name', 'email']), process.env.JWT_KEY as Secret, {
-                    expiresIn: '1 day',
-                });
-
-                return response
-                    .status(201)
-                    .json(new ApiResponder(true, 'User registered successfully', {
-                        user: user.only(['id', 'name', 'email']),
-                        token: token,
-                    }))
-            })
-            .catch((err) => {
-                return response
-                    .status(400)
-                    .json(new ApiResponder(false, err.message, null));
-            });
-    } catch (err) {
+        return response
+            .status(201)
+            .json(new ApiResponder(true, 'User registered successfully', {
+                user: user.only(['id', 'name', 'email']),
+                token: token,
+            }));
+    } catch (err: any) {
         if (err instanceof ZodError) {
             return response
                 .status(422)
                 .json(new ApiResponder(false, 'Some inputs are invalid', err.format()))
         }
 
-        throw err;
+        return response
+            .status(400)
+            .json(new ApiResponder(false, err.message || 'Error', null));
     }
 };
 
