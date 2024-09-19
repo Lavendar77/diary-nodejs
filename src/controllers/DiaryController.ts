@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ApiResponder } from '../actions/ApiResponder';
+import ApiResponder from '../actions/ApiResponder';
 import { AuthRequest } from '../interfaces/AuthRequest';
 import DiaryDto from '../dtos/Diary/DiaryDto';
 import DiaryService from '../services/DiaryService';

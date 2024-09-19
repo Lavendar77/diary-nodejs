@@ -1,9 +1,9 @@
 import DatabaseConnect from "../actions/DatabaseConnect";
 import User from "../models/User";
-import { hash } from "../modules/bcrypt";
-import { EntityManager } from "./_manager";
+import { Hash } from "../modules/bcrypt";
+import EntityManager from "./_manager";
 
-export class UserRepository extends EntityManager {
+export default class UserRepository extends EntityManager {
     protected table: string = 'users';
 
     public async store(user: User): Promise<unknown> {
@@ -12,8 +12,8 @@ export class UserRepository extends EntityManager {
         try {
             return await DatabaseConnect.run(sql, [
                 user.name,
-                user.email.toLowerCase(),
-                hash(user.getPassword()),
+                user.email?.toLowerCase(),
+                Hash(user.getPassword() as string),
                 this.db_timestamp,
                 this.db_timestamp
             ]);

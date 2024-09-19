@@ -1,13 +1,12 @@
 import express from 'express';
 import * as DiaryController from '../../controllers/DiaryController';
-import { authenticate } from '../../middlewares/Authenticate';
+import Authenticate from '../../middlewares/Authenticate';
 
 const router = express.Router();
 
-router.use(authenticate);
+router.use(Authenticate);
 
 router.get('/', DiaryController.index);
-
 router.post('/', DiaryController.store);
 
 // router.get('/:id', DiaryController.show);

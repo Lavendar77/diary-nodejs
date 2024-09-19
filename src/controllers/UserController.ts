@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { ApiResponder } from '../actions/ApiResponder';
+import ApiResponder from '../actions/ApiResponder';
 import { AuthRequest } from '../interfaces/AuthRequest';
-import { UserRepository } from '../repositories/UserRepository';
+import UserService from '../services/UserService';
 
 
 
@@ -15,7 +15,7 @@ import { UserRepository } from '../repositories/UserRepository';
  */
 export const show = async (request: AuthRequest|Request, response: Response) => {
     try {
-        const user = await new UserRepository().findById((request as any).user.id);
+        const user = await new UserService().find((request as any).user.id);
 
         return response
             .json(new ApiResponder(true, 'User fetched successfully', {

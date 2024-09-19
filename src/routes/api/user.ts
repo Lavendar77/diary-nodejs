@@ -1,10 +1,10 @@
 import express from 'express';
 import * as UserController from '../../controllers/UserController';
-import { authenticate } from '../../middlewares/Authenticate';
+import Authenticate from '../../middlewares/Authenticate';
 
 const router = express.Router();
 
-router.use(authenticate);
+router.use(Authenticate);
 
 router.get('/', UserController.show);
 

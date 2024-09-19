@@ -1,8 +1,8 @@
 import DatabaseConnect from "../actions/DatabaseConnect";
 import DiaryDto from "../dtos/Diary/DiaryDto";
-import { EntityManager } from "./_manager";
+import EntityManager from "./_manager";
 
-export class DiaryRepository extends EntityManager {
+export default class DiaryRepository extends EntityManager {
     protected table: string = 'users';
 
     public async getAll(userId: number): Promise<unknown> {

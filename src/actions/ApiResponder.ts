@@ -1,4 +1,4 @@
-export class ApiResponder {
+export default class ApiResponder {
     public constructor(
         private readonly success: boolean,
         private readonly message: string,

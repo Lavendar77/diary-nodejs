@@ -1,11 +1,11 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt, { Secret } from 'jsonwebtoken';
-import { ApiResponder } from '../actions/ApiResponder';
+import ApiResponder from '../actions/ApiResponder';
 import { AuthRequest } from '../interfaces/AuthRequest';
 
 const SECRET_KEY = process.env.JWT_KEY as Secret;
 
-export function authenticate(request: Request, response: Response, next: NextFunction) {
+export default function authenticate(request: Request, response: Response, next: NextFunction) {
     const token = request.header('Authorization')?.replace('Bearer ', '');
 
     if (!token) {

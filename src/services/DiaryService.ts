@@ -1,6 +1,6 @@
 import DiaryDto from "../dtos/Diary/DiaryDto";
 import Diary from "../models/Diary";
-import { DiaryRepository } from "../repositories/DiaryRepository";
+import DiaryRepository from "../repositories/DiaryRepository";
 
 
 export default class DiaryService {

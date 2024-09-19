@@ -3,7 +3,7 @@ import mysql, { Connection, ConnectionConfig } from 'mysql2';
 
 dotenv.config();
 
-export default new class DB {
+export default new class DatabaseConnect {
     run(sql: string, data: any[] = []): Promise<unknown> {
         const connection: Connection = mysql.createConnection({
             host: process.env.DB_HOST,

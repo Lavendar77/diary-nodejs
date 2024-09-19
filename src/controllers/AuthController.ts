@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { ZodError } from 'zod';
-import { ApiResponder } from '../actions/ApiResponder';
+import ApiResponder from '../actions/ApiResponder';
 import UserService from '../services/UserService';
 import UserRegisterDto from '../dtos/User/UserRegisterDto';
 import UserLoginDto from '../dtos/User/UserLoginDto';

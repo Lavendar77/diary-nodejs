@@ -2,9 +2,9 @@ import Model from "./_model";
 
 export default class User extends Model {
     private id: number|undefined;
-    public name: string = '';
-    public email: string = '';
-    private password: string = '';
+    public name: string|undefined;
+    public email: string|undefined;
+    private password: string|undefined;
 
     protected hidden: string[] = [
         "password",
@@ -28,7 +28,7 @@ export default class User extends Model {
         return this.id;
     }
 
-    public getPassword(): string {
+    public getPassword(): string|undefined {
         return this.password;
     }
 }

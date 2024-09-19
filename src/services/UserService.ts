@@ -1,11 +1,15 @@
 import UserLoginDto from "../dtos/User/UserLoginDto";
 import UserRegisterDto from "../dtos/User/UserRegisterDto";
 import User from "../models/User";
-import { compare } from "../modules/bcrypt";
-import { UserRepository } from "../repositories/UserRepository";
+import { Compare } from "../modules/bcrypt";
+import UserRepository from "../repositories/UserRepository";
 import jwt, { Secret } from 'jsonwebtoken';
 
 export default class UserService {
+    public async find(userId: number): Promise<User> {
+        return new UserRepository().findById(userId);
+    }
+
     public async register(userRegisterDto: UserRegisterDto): Promise<{user: User; token: string;}> {
         userRegisterDto.validate();
 
@@ -30,7 +34,7 @@ export default class UserService {
 
         const data = await new UserRepository().query().where('email', userLoginDto.email).get();
 
-        if (!compare(userLoginDto.password, data[0].password)) {
+        if (!Compare(userLoginDto.password, data[0].password)) {
             throw new Error('Invalid credentials');
         }
 

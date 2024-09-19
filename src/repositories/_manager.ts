@@ -1,7 +1,7 @@
 import moment from 'moment';
 import DatabaseConnect from '../actions/DatabaseConnect';
 
-export class EntityManager {
+export default class EntityManager {
     protected db_timestamp: string = moment().format('YYYY-MM-DD HH:mm:ss');
 
     protected table: string = '';
