@@ -10,13 +10,19 @@ export default class UserRepository extends EntityManager {
         let sql = 'INSERT INTO users(name, email, password, created_at, updated_at) VALUES(?, ?, ?, ?, ?)';
 
         try {
-            return await DatabaseConnect.run(sql, [
+            let result = await DatabaseConnect.run(sql, [
                 user.name,
                 user.email?.toLowerCase(),
                 Hash(user.getPassword() as string),
                 this.db_timestamp,
                 this.db_timestamp
             ]);
+
+            if (!(result as any).insertId) {
+                throw new Error('User not inserted into the table');
+            }
+
+            return result;
         } catch (err) {
             throw err;
         }

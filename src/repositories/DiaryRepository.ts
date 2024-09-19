@@ -14,12 +14,18 @@ export default class DiaryRepository extends EntityManager {
     public async store(userId: number, diaryDto: DiaryDto): Promise<unknown> {
         let sql = 'INSERT INTO diaries(user_id, title, content, created_at, updated_at) VALUES (?, ?, ?, ?, ?)';
 
-        return await DatabaseConnect.run(sql, [
+        let result = await DatabaseConnect.run(sql, [
             userId,
             diaryDto.title,
             diaryDto.content,
             this.db_timestamp,
             this.db_timestamp,
         ]);
+
+        if (!(result as any).insertId) {
+            throw new Error('Diary not inserted into the table');
+        }
+
+        return result;
     }
 }
