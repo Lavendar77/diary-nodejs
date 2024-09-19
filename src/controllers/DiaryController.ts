@@ -46,7 +46,7 @@ export const store = async (request: AuthRequest|Request, response: Response) =>
         const diary = await new DiaryService().store((request as any).user.id, diaryDto);
 
         return response
-            .json(new ApiResponder(true, 'Diaries fetched successfully', {
+            .json(new ApiResponder(true, 'Diary stored successfully', {
                 diary: diary.toJSON(),
             }));
     } catch (err: any) {
