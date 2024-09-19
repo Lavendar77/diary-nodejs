@@ -16,7 +16,7 @@ export default class EntityManager {
 
     public where(column: string, value: any): this {
         this.sqlQuery += (
-            this.sqlQuery == `SELECT * FROM ${this.table}`
+            this.sqlQuery.length
             ? (
                 this.sqlQuery.includes('WHERE')
                 ? ` AND ${column} = ?`

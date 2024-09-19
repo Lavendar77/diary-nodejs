@@ -16,7 +16,7 @@ export default async function authenticate(request: Request, response: Response,
     try {
         const decoded = jwt.verify(token, SECRET_KEY);
 
-        const user = await new UserService().find((decoded as JwtPayload).id);
+        const user = await new UserService().find((decoded as JwtPayload).id, (decoded as JwtPayload).email);
 
         (request as AuthRequest).user = user;
     } catch (error) {

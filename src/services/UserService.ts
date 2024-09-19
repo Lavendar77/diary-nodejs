@@ -6,7 +6,17 @@ import UserRepository from "../repositories/UserRepository";
 import jwt, { Secret } from 'jsonwebtoken';
 
 export default class UserService {
-    public async find(userId: number): Promise<object> {
+    public async find(userId: number, email?: string): Promise<object> {
+        if (email) {
+            const data: any = await new UserRepository().where('id', userId).where('email', email).get();
+
+            if (!data && !data.length) {
+                throw new Error('User not found');
+            }
+
+            return User.fromObject(data[0]).toJSON();
+        }
+
         return (await new UserRepository().findById(userId)).toJSON();
     }
 
