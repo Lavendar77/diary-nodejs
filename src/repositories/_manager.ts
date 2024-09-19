@@ -29,6 +29,20 @@ export default class EntityManager {
         return this;
     }
 
+    public async first(): Promise<any> {
+        this.sqlQuery += this.sqlQuery.includes('LIMIT')
+            ? ''
+            : ' LIMIT 1';
+
+        try {
+            let data: any = await DatabaseConnect.run(this.sqlQuery, this.sqlValue);
+
+            return data[0];
+        } catch(err) {
+            throw err;
+        }
+    }
+
     public async get(): Promise<any> {
         try {
             let data: any = await DatabaseConnect.run(this.sqlQuery, this.sqlValue);
