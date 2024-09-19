@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import ApiResponder from '../actions/ApiResponder';
 import { AuthRequest } from '../interfaces/AuthRequest';
-import UserService from '../services/UserService';
 
 
 
@@ -15,11 +14,9 @@ import UserService from '../services/UserService';
  */
 export const show = async (request: AuthRequest|Request, response: Response) => {
     try {
-        const user = await new UserService().find((request as any).user.id);
-
         return response
             .json(new ApiResponder(true, 'User fetched successfully', {
-                user: user,
+                user: (request as AuthRequest).user,
             }));
     } catch (err: any) {
         return response

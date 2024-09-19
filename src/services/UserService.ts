@@ -6,8 +6,8 @@ import UserRepository from "../repositories/UserRepository";
 import jwt, { Secret } from 'jsonwebtoken';
 
 export default class UserService {
-    public async find(userId: number): Promise<User> {
-        return new UserRepository().findById(userId);
+    public async find(userId: number): Promise<object> {
+        return (await new UserRepository().findById(userId)).toJSON();
     }
 
     public async register(userRegisterDto: UserRegisterDto): Promise<{user: User; token: string;}> {

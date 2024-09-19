@@ -28,6 +28,10 @@ export default class UserRepository extends EntityManager {
         try {
             let result = await DatabaseConnect.run(sql, [userID]);
 
+            if (!(result as any).length) {
+                throw new Error('User not found');
+            }
+
             return User.fromObject((result as any)[0]);
         } catch(err) {
             throw err;
