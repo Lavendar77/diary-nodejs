@@ -6,16 +6,20 @@ import { EntityManager } from "./_manager";
 export class UserRepository extends EntityManager {
     protected table: string = 'users';
 
-    public store(user: User): Promise<unknown> {
+    public async store(user: User): Promise<unknown> {
         let sql = 'INSERT INTO users(name, email, password, created_at, updated_at) VALUES(?, ?, ?, ?, ?)';
 
-        return DatabaseConnect.run(sql, [
-            user.name,
-            user.email.toLowerCase(),
-            hash(user.getPassword()),
-            this.db_timestamp,
-            this.db_timestamp
-        ]);
+        try {
+            return await DatabaseConnect.run(sql, [
+                user.name,
+                user.email.toLowerCase(),
+                hash(user.getPassword()),
+                this.db_timestamp,
+                this.db_timestamp
+            ]);
+        } catch (err) {
+            throw err;
+        }
     }
 
     public async findById(userID: number|string): Promise<User> {

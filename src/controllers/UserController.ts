@@ -14,10 +14,16 @@ import { UserRepository } from '../repositories/UserRepository';
  * @return {Response}
  */
 export const show = async (request: AuthRequest|Request, response: Response) => {
-    const user = await new UserRepository().findById((request as any).user.id);
+    try {
+        const user = await new UserRepository().findById((request as any).user.id);
 
-    return response
-        .json(new ApiResponder(true, 'User fetched successfully', {
-            user: user,
-        }));
+        return response
+            .json(new ApiResponder(true, 'User fetched successfully', {
+                user: user,
+            }));
+    } catch (err: any) {
+        return response
+            .status(400)
+            .json(new ApiResponder(false, err.message || 'Error', null));
+    }
 };
