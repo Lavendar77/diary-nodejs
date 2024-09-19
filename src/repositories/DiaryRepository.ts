@@ -1,17 +1,18 @@
 import DatabaseConnect from "../actions/DatabaseConnect";
 import DiaryDto from "../dtos/Diary/DiaryDto";
+import Diary from "../models/Diary";
 import EntityManager from "./_manager";
 
 export default class DiaryRepository extends EntityManager {
     protected table: string = 'users';
 
-    public async getAll(userId: number): Promise<unknown> {
+    public async getAllForUser(userId: number): Promise<unknown> {
         let sql = 'SELECT * FROM diaries WHERE user_id = ?';
 
         return await DatabaseConnect.run(sql, [userId]);
     }
 
-    public async store(userId: number, diaryDto: DiaryDto): Promise<unknown> {
+    public async storeForUser(userId: number, diaryDto: DiaryDto): Promise<unknown> {
         let sql = 'INSERT INTO diaries(user_id, title, content, created_at, updated_at) VALUES (?, ?, ?, ?, ?)';
 
         let result = await DatabaseConnect.run(sql, [
@@ -27,5 +28,46 @@ export default class DiaryRepository extends EntityManager {
         }
 
         return result;
+    }
+
+    public async findForUser(userID: number, diaryId: number): Promise<Diary> {
+        let sql = 'SELECT * FROM diaries WHERE id = ? AND user_id = ? LIMIT 1';
+
+        try {
+            let result = await DatabaseConnect.run(sql, [diaryId, userID]);
+
+            if (!(result as any).length) {
+                throw new Error('Diary not found');
+            }
+
+            return Diary.fromObject((result as any)[0]);
+        } catch(err) {
+            throw err;
+        }
+    }
+
+    public async updateForUser(userID: number, diaryId: number, diaryDto: DiaryDto): Promise<unknown> {
+        let sql = 'UPDATE diaries SET title = ?, content = ?, updated_at = ? WHERE id = ? AND user_id = ?';
+
+        try {
+            let result = await DatabaseConnect.run(
+                sql,
+                [diaryDto.title, diaryDto.content, this.db_timestamp, diaryId, userID]
+            );
+
+            if (!(result as any) && !(result as any).changedRows) {
+                throw new Error('Diary not updated');
+            }
+
+            return result;
+        } catch(err) {
+            throw err;
+        }
+    }
+
+    public async deleteForUser(userId: number, diaryId: number): Promise<unknown> {
+        let sql = 'DELETE FROM diaries WHERE id = ? AND user_id = ?';
+
+        return await DatabaseConnect.run(sql, [diaryId, userId]);
     }
 }

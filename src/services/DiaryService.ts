@@ -4,8 +4,8 @@ import DiaryRepository from "../repositories/DiaryRepository";
 
 
 export default class DiaryService {
-    public async index(userId: number): Promise<{diaries: any}> {
-        const diaries = await new DiaryRepository().getAll(userId);
+    public async getAll(userId: number): Promise<{diaries: any}> {
+        const diaries = await new DiaryRepository().getAllForUser(userId);
 
         return { diaries };
     }
@@ -19,9 +19,25 @@ export default class DiaryService {
             diaryDto.content,
         );
 
-        const data: any = await new DiaryRepository().store(userId, diaryDto);
+        const data: any = await new DiaryRepository().storeForUser(userId, diaryDto);
         diary.setId(data.insertId);
 
         return diary;
+    }
+
+    public async find(userId: number, diaryId: number): Promise<Diary> {
+        return await new DiaryRepository().findForUser(userId, diaryId);
+    }
+
+    public async update(userId: number, diaryId: number, diaryDto: DiaryDto): Promise<Diary> {
+        diaryDto.validate();
+
+        await new DiaryRepository().updateForUser(userId, diaryId, diaryDto);
+
+        return this.find(userId, diaryId);
+    }
+
+    public async delete(userId: number, diaryId: number): Promise<void> {
+        await new DiaryRepository().deleteForUser(userId, diaryId);
     }
 }
