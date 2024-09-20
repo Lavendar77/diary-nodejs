@@ -1,12 +1,13 @@
 service: serverless-diary
 
 plugins:
-  - serverless-esbuild # used for compiling/packaging the Typescript code
+  - serverless-dotenv-plugin # used for injecting variables from .env
+  - serverless-plugin-typescript
   - serverless-offline # used for local execution
 
 provider:
   name: aws
-  runtime: nodejs18.x
+  runtime: nodejs20.x
   region: eu-west-2
   stage: ${opt:stage}
   timeout: 30   # repository wide Lambda timeout
@@ -14,10 +15,26 @@ provider:
     STAGE: ${self:provider.stage}
 
 functions:
-  # Serverless Framework specific syntax
   Root:
     handler: ./src/handlers/index.handler
+    description: The root path of the Diary App
     events:
       - httpApi:
           path: /
           method: GET
+
+  AuthRegister:
+    handler: ./src/handlers/api/auth.register
+    description: Create a new user account
+    events:
+      - httpApi:
+          path: /api/auth/register
+          method: POST
+
+  AuthLogin:
+    handler: ./src/handlers/api/auth.login
+    description: Sign-in to an existing user account
+    events:
+      - httpApi:
+          path: /api/auth/login
+          method: POST

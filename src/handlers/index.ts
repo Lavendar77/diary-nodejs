@@ -11,6 +11,9 @@ export const handler: Handler = async (
 ): Promise<APIGatewayProxyStructuredResultV2> => {
     return new LambdaResponder(
         'Welcome to Diary',
-        null
-    );
+        {
+            success: true
+        },
+        400
+    ).toApiGatewayResponse();
 };
