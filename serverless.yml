@@ -38,3 +38,11 @@ functions:
       - httpApi:
           path: /api/auth/login
           method: POST
+
+  Error:
+    handler: ./src/handlers/api/error.handler
+    description: 404 page
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
