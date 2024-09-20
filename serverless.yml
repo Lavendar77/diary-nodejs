@@ -39,8 +39,56 @@ functions:
           path: /api/auth/login
           method: POST
 
+  UserRoot:
+    handler: ./src/handlers/api/user.handler
+    description: Get the authenticated user
+    events:
+      - httpApi:
+          path: /api/user
+          method: GET
+
+  DiaryList:
+    handler: ./src/handlers/api/diary.list
+    description: Get the diaries of the authenticated user
+    events:
+      - httpApi:
+          path: /api/diaries
+          method: GET
+
+  DiaryStore:
+    handler: ./src/handlers/api/diary.store
+    description: Create a diary for the authenticated user
+    events:
+      - httpApi:
+          path: /api/diaries
+          method: POST
+
+  DiaryView:
+    handler: ./src/handlers/api/diary.view
+    description: Get a specified diary for the authenticated user
+    events:
+      - httpApi:
+          path: /api/diaries/{id}
+          method: GET
+
+  DiaryUpdate:
+    handler: ./src/handlers/api/diary.update
+    description: Update a specified diary for the authenticated user
+    events:
+      - httpApi:
+          path: /api/diaries/{id}
+          method: PUT
+
+  DiaryDelete:
+    handler: ./src/handlers/api/diary.destroy
+    description: Delete a specified diary for the authenticated user
+    events:
+      - httpApi:
+          path: /api/diaries/{id}
+          method: DELETE
+
   Error:
-    handler: ./src/handlers/api/error.handler
+    handler: ./src/handlers/error.handler
     description: 404 page
     events:
       - httpApi:
