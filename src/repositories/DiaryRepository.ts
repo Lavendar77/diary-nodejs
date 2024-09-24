@@ -55,7 +55,7 @@ export default class DiaryRepository extends EntityManager {
                 [diaryDto.title, diaryDto.content, this.db_timestamp, diaryId, userID]
             );
 
-            if (!(result as any) && !(result as any).changedRows) {
+            if (!result || (result && !Boolean((result as any).changedRows))) {
                 throw new Error('Diary not updated');
             }
 
@@ -68,6 +68,16 @@ export default class DiaryRepository extends EntityManager {
     public async deleteForUser(userId: number, diaryId: number): Promise<unknown> {
         let sql = 'DELETE FROM diaries WHERE id = ? AND user_id = ?';
 
-        return await DatabaseConnect.run(sql, [diaryId, userId]);
+        try {
+            let result = await DatabaseConnect.run(sql, [diaryId, userId]);
+
+            if (!result || (result && !Boolean((result as any).affectedRows))) {
+                throw new Error('Diary does not exist or could not be deleted');
+            }
+
+            return result;
+        } catch(err) {
+            throw err;
+        }
     }
 }

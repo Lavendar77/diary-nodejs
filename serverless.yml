@@ -1,0 +1,117 @@
+service: serverless-diary
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-plugin-typescript
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs20.x
+  region: eu-west-2
+  stage: ${opt:stage}
+  timeout: 30   # repository wide Lambda timeout
+  environment:  # repository wide Lambda env variables
+    STAGE: ${self:provider.stage}
+
+functions:
+  authenticate:
+    handler: ./src/middlewares/Authenticate.authenticateApiGateway
+
+  Root:
+    handler: ./src/handlers/index.handler
+    description: The root path of the Diary App
+    events:
+      - httpApi:
+          path: /
+          method: GET
+
+  AuthRegister:
+    handler: ./src/handlers/api/auth.register
+    description: Create a new user account
+    events:
+      - httpApi:
+          path: /api/auth/register
+          method: POST
+
+  AuthLogin:
+    handler: ./src/handlers/api/auth.login
+    description: Sign-in to an existing user account
+    events:
+      - httpApi:
+          path: /api/auth/login
+          method: POST
+
+  UserRoot:
+    handler: ./src/handlers/api/user.handler
+    description: Get the authenticated user
+    events:
+      - httpApi:
+          path: /api/user
+          method: GET
+          authorizer:
+            name: authenticate
+            type: request
+
+  DiaryList:
+    handler: ./src/handlers/api/diary.list
+    description: Get the diaries of the authenticated user
+    events:
+      - httpApi:
+          path: /api/diaries
+          method: GET
+          authorizer:
+            name: authenticate
+            type: request
+
+  DiaryStore:
+    handler: ./src/handlers/api/diary.store
+    description: Create a diary for the authenticated user
+    events:
+      - httpApi:
+          path: /api/diaries
+          method: POST
+          authorizer:
+            name: authenticate
+            type: request
+
+  DiaryView:
+    handler: ./src/handlers/api/diary.view
+    description: Get a specified diary for the authenticated user
+    events:
+      - httpApi:
+          path: /api/diaries/{id}
+          method: GET
+          authorizer:
+            name: authenticate
+            type: request
+
+  DiaryUpdate:
+    handler: ./src/handlers/api/diary.update
+    description: Update a specified diary for the authenticated user
+    events:
+      - httpApi:
+          path: /api/diaries/{id}
+          method: PUT
+          authorizer:
+            name: authenticate
+            type: request
+
+  DiaryDelete:
+    handler: ./src/handlers/api/diary.destroy
+    description: Delete a specified diary for the authenticated user
+    events:
+      - httpApi:
+          path: /api/diaries/{id}
+          method: DELETE
+          authorizer:
+            name: authenticate
+            type: request
+
+  Error:
+    handler: ./src/handlers/error.handler
+    description: 404 page
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
