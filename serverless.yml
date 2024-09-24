@@ -60,6 +60,9 @@ functions:
       - httpApi:
           path: /api/diaries
           method: GET
+          authorizer:
+            name: authenticate
+            type: request
 
   DiaryStore:
     handler: ./src/handlers/api/diary.store
@@ -68,6 +71,9 @@ functions:
       - httpApi:
           path: /api/diaries
           method: POST
+          authorizer:
+            name: authenticate
+            type: request
 
   DiaryView:
     handler: ./src/handlers/api/diary.view
@@ -76,6 +82,9 @@ functions:
       - httpApi:
           path: /api/diaries/{id}
           method: GET
+          authorizer:
+            name: authenticate
+            type: request
 
   DiaryUpdate:
     handler: ./src/handlers/api/diary.update
@@ -84,6 +93,9 @@ functions:
       - httpApi:
           path: /api/diaries/{id}
           method: PUT
+          authorizer:
+            name: authenticate
+            type: request
 
   DiaryDelete:
     handler: ./src/handlers/api/diary.destroy
@@ -92,6 +104,9 @@ functions:
       - httpApi:
           path: /api/diaries/{id}
           method: DELETE
+          authorizer:
+            name: authenticate
+            type: request
 
   Error:
     handler: ./src/handlers/error.handler
