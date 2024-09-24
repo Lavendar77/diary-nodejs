@@ -6,7 +6,7 @@ import UserService from '../services/UserService';
 
 const SECRET_KEY = process.env.JWT_KEY as Secret;
 
-export default async function authenticate(request: Request, response: Response, next: NextFunction) {
+export async function authenticate(request: Request, response: Response, next: NextFunction) {
     const token = request.header('Authorization')?.replace('Bearer ', '');
 
     if (!token) {
