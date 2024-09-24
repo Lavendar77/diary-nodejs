@@ -1,9 +1,9 @@
 service: serverless-diary
 
 plugins:
-  - serverless-dotenv-plugin # used for injecting variables from .env
+  - serverless-dotenv-plugin
   - serverless-plugin-typescript
-  - serverless-offline # used for local execution
+  - serverless-offline
 
 provider:
   name: aws
@@ -15,6 +15,9 @@ provider:
     STAGE: ${self:provider.stage}
 
 functions:
+  authenticate:
+    handler: ./src/middlewares/Authenticate.authenticateApiGateway
+
   Root:
     handler: ./src/handlers/index.handler
     description: The root path of the Diary App
@@ -43,9 +46,10 @@ functions:
     handler: ./src/handlers/api/user.handler
     description: Get the authenticated user
     events:
-      - httpApi:
+      - http:
           path: /api/user
           method: GET
+          authorizer: authenticate
 
   DiaryList:
     handler: ./src/handlers/api/diary.list

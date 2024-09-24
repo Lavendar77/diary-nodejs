@@ -1,4 +1,4 @@
-import { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2, Context, Handler } from "aws-lambda";
+import { APIGatewayProxyStructuredResultV2, Context, Handler } from "aws-lambda";
 import LambdaResponder from "../../actions/LambdaResponder";
 
 
@@ -6,11 +6,15 @@ import LambdaResponder from "../../actions/LambdaResponder";
 
 
 export const handler: Handler = async (
-    _event: APIGatewayProxyEventV2,
+    _event: any,
     _context: Context
 ): Promise<APIGatewayProxyStructuredResultV2> => {
+    const user = JSON.parse(_event.requestContext.authorizer.extras).user;
+
     return new LambdaResponder(
-        '',
-        null
+        'User fetched successfully',
+        {
+            user: user,
+        }
     );
 };

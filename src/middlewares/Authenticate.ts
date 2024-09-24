@@ -25,3 +25,46 @@ export async function authenticate(request: Request, response: Response, next: N
 
     next();
 }
+
+export async function authenticateApiGateway(_event: any, _context: any) {
+    const token = _event.authorizationToken?.replace('Bearer ', '');
+
+    if (!token) {
+        return generateAuthResponse("user", "Deny", _event.methodArn);
+    }
+
+    try {
+        const decoded = jwt.verify(token, SECRET_KEY);
+
+        const user = await new UserService().find((decoded as JwtPayload).id, (decoded as JwtPayload).email);
+
+        return generateAuthResponse((user as any).id, "Allow", _event.methodArn, {
+            user: user,
+        });
+    } catch (err) {
+        return generateAuthResponse("user", "Deny", _event.methodArn);
+    }
+}
+
+function generateAuthResponse(principalId: string, effect: any, methodArn: string, extra: any = null) {
+    if (!effect || !methodArn) return null;
+
+    const policyDocument = {
+        Version: "2012-10-17",
+        Statement: [
+            {
+                Action: "execute-api:Invoke",
+                Effect: effect,
+                Resource: methodArn
+            }
+        ],
+    };
+
+    return {
+        principalId,
+        policyDocument,
+        context: {
+            extras: JSON.stringify(extra)
+        },
+    };
+}
