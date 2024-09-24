@@ -73,7 +73,6 @@ export const view: Handler = async (
     _event: any,
     _context: Context
 ): Promise<APIGatewayProxyStructuredResultV2> => {
-    console.log(_event)
     try {
         const diary = await new DiaryService().find(
             JSON.parse(_event.requestContext.authorizer.lambda.extras).user.id,
