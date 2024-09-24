@@ -9,7 +9,7 @@ export const handler: Handler = async (
     _event: any,
     _context: Context
 ): Promise<APIGatewayProxyStructuredResultV2> => {
-    const user = JSON.parse(_event.requestContext.authorizer.extras).user;
+    const user = JSON.parse(_event.requestContext.authorizer.lambda.extras).user;
 
     return new LambdaResponder(
         'User fetched successfully',

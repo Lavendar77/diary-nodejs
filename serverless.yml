@@ -46,10 +46,12 @@ functions:
     handler: ./src/handlers/api/user.handler
     description: Get the authenticated user
     events:
-      - http:
+      - httpApi:
           path: /api/user
           method: GET
-          authorizer: authenticate
+          authorizer:
+            name: authenticate
+            type: request
 
   DiaryList:
     handler: ./src/handlers/api/diary.list

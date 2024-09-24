@@ -27,10 +27,10 @@ export async function authenticate(request: Request, response: Response, next: N
 }
 
 export async function authenticateApiGateway(_event: any, _context: any) {
-    const token = _event.authorizationToken?.replace('Bearer ', '');
+    const token = _event.headers.Authorization?.replace('Bearer ', '');
 
     if (!token) {
-        return generateAuthResponse("user", "Deny", _event.methodArn);
+        return generateAuthResponse("user", "Deny", _event.routeArn);
     }
 
     try {
@@ -38,24 +38,22 @@ export async function authenticateApiGateway(_event: any, _context: any) {
 
         const user = await new UserService().find((decoded as JwtPayload).id, (decoded as JwtPayload).email);
 
-        return generateAuthResponse((user as any).id, "Allow", _event.methodArn, {
+        return generateAuthResponse((user as any).id, "Allow", _event.routeArn, {
             user: user,
         });
     } catch (err) {
-        return generateAuthResponse("user", "Deny", _event.methodArn);
+        return generateAuthResponse("user", "Deny", _event.routeArn);
     }
 }
 
-function generateAuthResponse(principalId: string, effect: any, methodArn: string, extra: any = null) {
-    if (!effect || !methodArn) return null;
-
+function generateAuthResponse(principalId: string, effect: any, arn: string, extra: any = null) {
     const policyDocument = {
         Version: "2012-10-17",
         Statement: [
             {
                 Action: "execute-api:Invoke",
                 Effect: effect,
-                Resource: methodArn
+                Resource: arn
             }
         ],
     };
