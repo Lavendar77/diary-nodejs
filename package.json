@@ -9,7 +9,8 @@
     "dev": "nodemon index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "npx ts-node src/console/migrate.ts",
-    "migrate:rollback": "npx ts-node src/console/migrate_rollback.ts"
+    "migrate:rollback": "npx ts-node src/console/migrate_rollback.ts",
+    "serverless": "NODE_NO_WARNINGS=1 serverless offline start -s dev --httpPort 8080 --reloadHandler"
   },
   "author": "Adeyinka Adefolurin",
   "license": "ISC",
