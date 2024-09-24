@@ -55,7 +55,7 @@ export default class DiaryRepository extends EntityManager {
                 [diaryDto.title, diaryDto.content, this.db_timestamp, diaryId, userID]
             );
 
-            if (!(result as any) && !(result as any).changedRows) {
+            if (!result || (result && !Boolean((result as any).changedRows))) {
                 throw new Error('Diary not updated');
             }
 
