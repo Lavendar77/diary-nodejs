@@ -7,6 +7,7 @@ import Job from "./src/jobs/Job";
 dotenv.config();
 
 const port: number = Number(process.env.REDIS_PORT) || 6379;
+const host: string = process.env.REDIS_HOST || 'localhost';
 
 const classMap: { [key: string]: any } = {
     UserLoggedIn,
@@ -18,4 +19,4 @@ queue.process(async (job) => {
     process.handle();
 });
 
-console.log("\x1b[36m", `⚡️[queue]: Worker is running at ${port}`);
+console.log("\x1b[36m", `⚡️[queue]: Worker is running at ${host}:${port}`);
