@@ -17,3 +17,8 @@ Built with ❤️ using:
 
 ### Serverless
 - Run the offline version: `npm run serverless`
+
+
+## TO-DO
+- Implement a scheduler for CRON jobs
+- Send email to new user
