@@ -7,10 +7,11 @@
     "build": "npx tsc --build",
     "start": "node build/index.js",
     "dev": "nodemon index.ts",
-    "queue:work": "nodemon worker.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "npx ts-node src/console/migrate.ts",
     "migrate:rollback": "npx ts-node src/console/migrate_rollback.ts",
+    "queue:work": "node build/worker.js",
+    "queue:listen": "nodemon worker.ts",
     "serverless": "NODE_NO_WARNINGS=1 serverless offline start -s dev --httpPort 8080 --reloadHandler"
   },
   "author": "Adeyinka Adefolurin",
