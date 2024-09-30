@@ -15,7 +15,7 @@ const classMap: { [key: string]: any } = {
 
 const queue = new Bull(QueueNames.default.toString());
 queue.process(async (job) => {
-    const process: Job = new classMap[job.data.__class_name](...Object.values(job.data.arguments));
+    const process: Job = new classMap[job.data.__class_name](job.data.arguments);
     process.handle();
 });
 
