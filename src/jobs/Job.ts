@@ -1,7 +1,9 @@
 import { Queue, QueueNames } from "../modules/queue";
 
 export default class Job {
-    public queue: QueueNames|undefined;
+    public queue: QueueNames = QueueNames.default;
+
+    public delay: number = 0;
 
     public onQueue(queue: QueueNames): this {
         this.queue = queue;
@@ -9,12 +11,16 @@ export default class Job {
         return this;
     }
 
-    public getQueue(): QueueNames {
-        return this.queue ?? QueueNames.default;
+    public onDelay(milliseconds: number): this {
+        this.delay = milliseconds;
+
+        return this;
     }
 
     public async dispatch() {
-        await Queue(this.getQueue()).add(this);
+        await Queue(this.queue).add(this, {
+            delay: this.delay,
+        });
     }
 
     public handle(): void {}
