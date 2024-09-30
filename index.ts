@@ -17,5 +17,5 @@ app.use('/api', apiRouter);
 app.use('*', errorRouter);
 
 app.listen(port, () => {
-    console.log("\x1b[32m", `⚡️[server]: Server is running at ${app_url}:${port}`);
+    console.log("\x1b[36m", `⚡️[server]: Server is running at ${app_url}:${port}`);
 });
