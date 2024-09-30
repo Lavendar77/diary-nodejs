@@ -1,5 +1,6 @@
 import UserLoginDto from "../dtos/User/UserLoginDto";
 import UserRegisterDto from "../dtos/User/UserRegisterDto";
+import { UserLoggedIn } from "../jobs/UserLoggedIn";
 import User from "../models/User";
 import { Compare } from "../modules/bcrypt";
 import UserRepository from "../repositories/UserRepository";
@@ -53,6 +54,8 @@ export default class UserService {
         const token = jwt.sign(user.only(['id', 'name', 'email']), process.env.JWT_KEY as Secret, {
             expiresIn: '1 day',
         });
+
+        new UserLoggedIn(user).dispatch();
 
         return { user, token };
     }
