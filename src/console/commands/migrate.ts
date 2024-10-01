@@ -1,5 +1,5 @@
-import { Users } from "../migrations/users";
-import { Diaries } from "../migrations/diaries";
+import { Users } from "../../migrations/users";
+import { Diaries } from "../../migrations/diaries";
 import { exit } from "process";
 
 const users = new Users();

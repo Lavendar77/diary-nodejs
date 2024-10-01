@@ -1,9 +1,11 @@
 import { Queue, QueueNames } from "../modules/queue";
 
-export default class Job {
+export default abstract class Job {
     public queue: QueueNames = QueueNames.default;
 
     public delay: number = 0;
+
+    abstract handle(): void;
 
     public onQueue(queue: QueueNames): this {
         this.queue = queue;
@@ -22,8 +24,6 @@ export default class Job {
             delay: this.delay,
         });
     }
-
-    public handle(): void {}
 
     toJSON() {
         const classProperties = Object.entries(this)

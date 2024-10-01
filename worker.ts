@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import { QueueNames } from "./src/modules/queue";
 import { UserLoggedIn } from "./src/jobs/UserLoggedIn";
 import Job from "./src/jobs/Job";
+import Inspire from "./src/console/commands/inspire";
 
 dotenv.config();
 
@@ -11,6 +12,7 @@ const host: string = process.env.REDIS_HOST || 'localhost';
 
 const classMap: { [key: string]: any } = {
     UserLoggedIn,
+    Inspire,
 };
 
 const queue = new Bull(QueueNames.default.toString());
