@@ -8,10 +8,11 @@ plugins:
 provider:
   name: aws
   runtime: nodejs20.x
-  region: eu-west-2
+  region: ${opt:region}
   stage: ${opt:stage}
   timeout: 30   # repository wide Lambda timeout
   environment:  # repository wide Lambda env variables
+    REGION: ${self:provider.region}
     STAGE: ${self:provider.stage}
 
 functions:
