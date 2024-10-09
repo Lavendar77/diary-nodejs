@@ -2,7 +2,7 @@ import { Migration } from './_runner';
 
 export class Diaries extends Migration {
     public up(): Promise<void> {
-        this.sql = `CREATE TABLE diaries (
+        this.sql = `CREATE TABLE IF NOT EXISTS diaries (
             id bigint unsigned NOT NULL AUTO_INCREMENT,
             user_id bigint unsigned NOT NULL,
             title varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
