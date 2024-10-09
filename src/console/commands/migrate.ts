@@ -1,12 +1,17 @@
+import { _Database } from "../../migrations/_database";
 import { Users } from "../../migrations/users";
 import { Diaries } from "../../migrations/diaries";
 import { exit } from "process";
 
+const database = new _Database();
 const users = new Users();
 const diaries = new Diaries();
 
-users.up()
-    .then(() => diaries.up())
+database.up()
     .then(() => {
-        exit();
+        users.up()
+            .then(() => diaries.up())
+            .then(() => {
+                exit();
+            })
     })
