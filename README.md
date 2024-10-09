@@ -1,12 +1,10 @@
 # Welcome to my Diary App
-![serverless](serverless.png)
 
-# Languages
+## Languages
 Built with ❤️ using:
 - Node.js
 - TypeScript
 - Express
-- Serverless Framework
 
 ## Development
 - Installation: `npm install`
@@ -14,11 +12,3 @@ Built with ❤️ using:
 ### Express App
 - Compile the TypeScript modules: `npm run build`
 - Run the app: `npm run start`
-
-### Serverless
-- Run the offline version: `npm run serverless`
-
-
-## TO-DO
-- Implement a scheduler for CRON jobs
-- Send email to new user
