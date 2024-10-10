@@ -38,7 +38,7 @@ jobs:
           node-version: '20' # specify your Node.js version
 
       - name: Install Serverless Framework
-        run: npm install -g serverless@3.26.3
+        run: npm install -g serverless@^3.0
 
       - name: Create .env file
         run: |
