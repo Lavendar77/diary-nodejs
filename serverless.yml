@@ -11,7 +11,7 @@ provider:
   region: ${opt:region}
   stage: ${opt:stage}
   role: ${param:role}
-  timeout: 30   # repository wide Lambda timeout
+  timeout: 60   # repository wide Lambda timeout
   deploymentMethod: changesets
   # environment:  # repository wide Lambda env variables
   #   REGION: ${self:provider.region}
