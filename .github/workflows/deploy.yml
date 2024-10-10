@@ -18,6 +18,14 @@ jobs:
         with:
           node-version: '20' # specify your Node.js version
 
+      - name: Cache Node modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
       - name: Install dependencies
         run: npm install
 
@@ -36,6 +44,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '20' # specify your Node.js version
+
+      - name: Install dependencies
+        run: npm install
 
       - name: Install Serverless Framework
         run: npm install -g serverless@^3.0
@@ -56,12 +67,14 @@ jobs:
           echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
           echo "AWS_REGION=${{ vars.AWS_REGION }}" >> .env
 
+      - name: List installed packages
+        run: npm list --depth=0
+
       - name: Deploy to AWS
         run: serverless deploy -s production -r ${{ vars.AWS_REGION }} --param="role=${{ secrets.AWS_ROLE_ID }}"
 
       - name: Run database migrations
-        run: |
-          npm run migrate
+        run: npm run migrate
 
       - name: Notify deployment success
         run: echo "Deployment successful!"
