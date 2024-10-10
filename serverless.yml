@@ -10,10 +10,13 @@ provider:
   runtime: nodejs20.x
   region: ${opt:region}
   stage: ${opt:stage}
+  role: ${param:role}
   timeout: 30   # repository wide Lambda timeout
-  environment:  # repository wide Lambda env variables
-    REGION: ${self:provider.region}
-    STAGE: ${self:provider.stage}
+  deploymentMethod: changesets
+  # environment:  # repository wide Lambda env variables
+  #   REGION: ${self:provider.region}
+  #   STAGE: ${self:provider.stage}
+  #   ROLE: ${self:provider.role}
 
 functions:
   authenticate:
