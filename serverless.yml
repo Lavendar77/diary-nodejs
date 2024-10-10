@@ -15,7 +15,7 @@ provider:
   deploymentMethod: changesets
   httpApi:
     authorizers:
-      customAuthorizer:
+      authenticate:
         type: request
         functionName: authenticate
 
