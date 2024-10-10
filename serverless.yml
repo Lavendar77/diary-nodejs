@@ -13,10 +13,11 @@ provider:
   role: ${param:role}
   timeout: 60   # repository wide Lambda timeout
   deploymentMethod: changesets
-  # environment:  # repository wide Lambda env variables
-  #   REGION: ${self:provider.region}
-  #   STAGE: ${self:provider.stage}
-  #   ROLE: ${self:provider.role}
+  httpApi:
+    authorizers:
+      customAuthorizer:
+        type: request
+        functionName: aunthenticate
 
 functions:
   authenticate:
