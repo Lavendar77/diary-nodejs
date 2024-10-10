@@ -17,7 +17,7 @@ provider:
     authorizers:
       customAuthorizer:
         type: request
-        functionName: aunthenticate
+        functionName: authenticate
 
 functions:
   authenticate:
