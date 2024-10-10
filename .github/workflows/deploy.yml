@@ -57,7 +57,7 @@ jobs:
           echo "AWS_REGION=${{ vars.AWS_REGION }}" >> .env
 
       - name: Deploy to AWS
-        run: serverless deploy -s production -r ${{ vars.AWS_REGION }}
+        run: serverless deploy -s production -r ${{ vars.AWS_REGION }} --param="role=${{ secrets.AWS_ROLE_ID }}"
 
       - name: Run database migrations
         run: |
