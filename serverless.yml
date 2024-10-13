@@ -14,7 +14,7 @@ provider:
   runtime: nodejs20.x
   region: ${opt:region, 'eu-west-2'}
   stage: ${opt:stage, 'production'}
-  timeout: 60
+  timeout: 30
   memorySize: 128
   deploymentMethod: changesets
   deploymentBucket:
@@ -32,7 +32,6 @@ functions:
   Root:
     handler: ./src/handlers/index.handler
     description: The root path of the Diary App
-    timeout: 60
     events:
       - httpApi:
           path: /
@@ -41,7 +40,6 @@ functions:
   AuthRegister:
     handler: ./src/handlers/api/auth.register
     description: Create a new user account
-    timeout: 60
     events:
       - httpApi:
           path: /api/auth/register
@@ -50,7 +48,6 @@ functions:
   AuthLogin:
     handler: ./src/handlers/api/auth.login
     description: Sign-in to an existing user account
-    timeout: 60
     events:
       - httpApi:
           path: /api/auth/login
