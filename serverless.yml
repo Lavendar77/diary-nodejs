@@ -6,8 +6,7 @@ plugins:
   - serverless-offline
 
 package:
-  exclude:
-    - node_modules/**
+  individually: true
 
 provider:
   name: aws
