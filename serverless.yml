@@ -5,6 +5,10 @@ plugins:
   - serverless-plugin-typescript
   - serverless-offline
 
+package:
+  exclude:
+    - node_modules/**
+
 provider:
   name: aws
   runtime: nodejs20.x
