@@ -7,17 +7,12 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "migrate": "npx ts-node src/console/commands/migrate.ts",
     "migrate:rollback": "npx ts-node src/console/commands/migrate_rollback.ts",
-    "queue:work": "node build/worker.js",
-    "queue:listen": "nodemon worker.ts",
-    "schedule:run": "node build/console/kernel.js",
-    "schedule:listen": "npx ts-node src/console/kernel.ts",
     "serverless": "NODE_NO_WARNINGS=1 serverless offline start -s dev --httpPort 8080 --reloadHandler"
   },
   "author": "Adeyinka Adefolurin",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "bull": "^4.16.3",
     "dotenv": "^16.4.5",
     "jsonwebtoken": "^9.0.2",
     "moment": "^2.30.1",

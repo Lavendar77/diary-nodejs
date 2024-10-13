@@ -1,5 +1,5 @@
 {
-  "include": ["worker.ts", "src", "console"],
+  "include": ["src", "console"],
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 

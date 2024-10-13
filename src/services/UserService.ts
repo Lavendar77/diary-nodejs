@@ -55,7 +55,7 @@ export default class UserService {
             expiresIn: '1 day',
         });
 
-        new UserLoggedIn({ user }).dispatch();
+        new UserLoggedIn({ user }).onDelay(5000).dispatch();
 
         return { user, token };
     }
