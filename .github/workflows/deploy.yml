@@ -1,6 +1,7 @@
 name: Deploy Serverless Application
 
 on:
+  workflow_dispatch:  # This allows the workflow to be triggered manually
   push:
     branches:
       - main
