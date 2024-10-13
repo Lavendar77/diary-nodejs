@@ -64,8 +64,6 @@ jobs:
           echo "DB_NAME=${{ vars.DB_NAME }}" >> .env
           echo "BCRYPT_ROUNDS=${{ vars.BCRYPT_ROUNDS }}" >> .env
           echo "JWT_KEY=${{ secrets.JWT_KEY }}" >> .env
-          echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env
-          echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> .env
 
       - name: List installed packages
         run: npm list --depth=0
