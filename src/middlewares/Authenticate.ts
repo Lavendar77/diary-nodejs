@@ -19,6 +19,7 @@ export async function authenticateApiGateway(_event: any, _context: any) {
             user: user,
         });
     } catch (err) {
+        console.log('Authentication error', err);
         return generateAuthResponse("user", "Deny", _event.routeArn);
     }
 }
