@@ -65,18 +65,13 @@ jobs:
           echo "REDIS_PORT=${{ secrets.REDIS_PORT }}" >> .env
           echo "AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
           echo "AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
-          echo "AWS_REGION=${{ vars.AWS_REGION }}" >> .env
+          echo "AWS_SESSION_TOKEN=${{ secrets.AWS_SESSION_TOKEN }}" >> .env
 
       - name: List installed packages
         run: npm list --depth=0
 
       - name: Deploy to AWS
-        uses: serverless/github-action@master
-        with:
-          args: deploy
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: serverless deploy -s production -r ${{ vars.AWS_REGION }}"
 
       - name: Run database migrations
         run: npm run migrate

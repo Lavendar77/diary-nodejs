@@ -10,7 +10,7 @@ provider:
   runtime: nodejs20.x
   region: ${opt:region, 'eu-west-2'}
   stage: ${opt:stage, 'production'}
-  timeout: 30
+  timeout: 60
   memorySize: 128
   deploymentMethod: changesets
   deploymentBucket:
