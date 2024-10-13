@@ -8,11 +8,13 @@ plugins:
 provider:
   name: aws
   runtime: nodejs20.x
-  region: ${opt:region}
-  stage: ${opt:stage}
-  role: ${param:role}
-  timeout: 60   # repository wide Lambda timeout
+  region: ${opt:region, 'eu-west-2'}
+  stage: ${opt:stage, 'production'}
+  timeout: 30
+  memorySize: 128
   deploymentMethod: changesets
+  deploymentBucket:
+    blockPublicAccess: true
   httpApi:
     authorizers:
       authenticate:

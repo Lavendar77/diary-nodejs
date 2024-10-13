@@ -71,7 +71,12 @@ jobs:
         run: npm list --depth=0
 
       - name: Deploy to AWS
-        run: serverless deploy -s production -r ${{ vars.AWS_REGION }} --param="role=${{ secrets.AWS_ROLE_ID }}"
+        uses: serverless/github-action@master
+        with:
+          args: deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Run database migrations
         run: npm run migrate

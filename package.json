@@ -11,7 +11,7 @@
     "queue:listen": "nodemon worker.ts",
     "schedule:run": "node build/console/kernel.js",
     "schedule:listen": "npx ts-node src/console/kernel.ts",
-    "serverless": "NODE_NO_WARNINGS=1 serverless offline start -s dev -r eu-west-2 --httpPort 8080 --reloadHandler --param='role=testing'"
+    "serverless": "NODE_NO_WARNINGS=1 serverless offline start -s dev --httpPort 8080 --reloadHandler"
   },
   "author": "Adeyinka Adefolurin",
   "license": "ISC",
