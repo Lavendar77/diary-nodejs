@@ -11,15 +11,15 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: '20' # specify your Node.js version
+          node-version: '20'
 
       - name: Cache Node modules
-        uses: actions/cache@v3
+        uses: actions/cache@v2
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
@@ -38,12 +38,12 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: '20' # specify your Node.js version
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
@@ -71,7 +71,7 @@ jobs:
         run: npm list --depth=0
 
       - name: Deploy to AWS
-        run: serverless deploy -s production -r ${{ vars.AWS_REGION }}"
+        run: serverless deploy -s production -r ${{ vars.AWS_REGION }}
 
       - name: Run database migrations
         run: npm run migrate
